@@ -1,4 +1,4 @@
-const provedores = require('../models/prevedores' );
+const provedores = require('../models/provedores' );
 
 module.exports = function (app)
 {
