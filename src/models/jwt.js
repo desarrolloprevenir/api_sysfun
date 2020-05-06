@@ -4,8 +4,7 @@ let jwts = require('jsonwebtoken');
 let vals = require('./valida');
 let user = require('./user');
 let ciclo = require('../controler/ciclos')
-let email = require('./email');
-let sms = require('./sms');
+
 
 connection = mysql.createConnection({
 host: config.host,
@@ -16,6 +15,37 @@ database: config.nombredb
 
 let jwtmodel = {};
 
+jwtmodel.login1 = (login,callback)=> {
+  if(connection)
+  {
+    console.log(login);
+    let sql = 'SELECT usuarios.id_usuarios, roles.* FROM usuarios, roles WHERE usuarios.id_usuarios = ? AND roles.id_roles = usuarios.roles_id;';
+    connection.query(sql,[login.usuario],(err,row)=>{
+      if(err){throw err}
+      else {
+        if (JSON.stringify(row)!='[]')
+        {
+          console.log("no existe el usuario o contraseña incorrecta");
+        }
+        else
+        {
+          console.log(row);
+          let sqlpr = 'SELECT * FROM permisos WHERE roles_id = ?;';
+          connection.query(sqlpr,[row.id_roles],(err,resp)=>{
+            if(err){throw err}
+            else
+                {
+                  row.permisos = resp;
+                  console.log(row);
+                  callback(200,row);
+                }
+          })
+
+        }
+      }
+    })
+  }
+};
 //realiza el login de los ususarios retorna un token
 jwtmodel.login = (logins,callback) =>{
  console.log('****************************');
@@ -249,56 +279,8 @@ return res.status(305).send({'mensaje':'error al validar ususario'});
 }
 };
 
-jwtmodel.confirmaCuenta = (salt,callback)=>{
-  let con = 'SELECT salt FROM members Where id = ? AND salt = ?;'
-  console.log(salt);
-  connection.query(con,[salt.id,salt.salt],(err,res)=>{
-    if(err){throw err}
-    else
-    {
-      console.log(res);
-      if(JSON.stringify(res)!='[]')
-      {
-        let upt = 'UPDATE members SET locked = 1 WHERE (id =?);'
-        connection.query(upt,[salt.id],(err,resp)=>{
-          if(err){throw err}
-          else
-          {
-            callback(null,true);
-          }
-        });
-      }
-      else
-      {
-        callback(null,false);
-      }
-    }
-  });
-};
 
-jwtmodel.bloqueo = (id,callback) =>{
-  if(connection)
-  {
-    console.log('id de bloqueo');
-    console.log(id);
-    let sel = 'SELECT locked FROM members WHERE id = ?';
-    connection.query(sel,[id],(err,row)=>{
-      if(err){throw err}
-      else
-      {
-        console.log(row);
-        row = row[0];
-        if(row.locked==0)
-        {
-          callback(null,false);
-        }
-        else
-        {
-          callback(null,true);
-        }
-      }
-    });
-  }
-};
+
+
 
 module.exports = jwtmodel;
