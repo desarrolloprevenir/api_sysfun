@@ -126,8 +126,9 @@ app.all('*', function(req, res,next) {
 //rutas de el servidor
 //rutas.route('/login').post(ses.login);
 require('./routes/jwtRoutes')(app);
+require('./routes/planesRoutes')(app);
 require('./routes/provedoresRoutes')(app);
-// require('./routes/pruebasRoutes')(app);
+// require('./routes/planesRoutes')(app);
 // require('./routes/comentRoutes')(app);
 // require('./routes/medicoRoutes')(app);
 // require('./routes/citasIn')(app);
