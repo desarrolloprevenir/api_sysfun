@@ -7,15 +7,12 @@ const cont = require('../models/contratos');
 
 module.exports = function (app) {
 
-//ejecuta el login de los ususarios y provedores
-app.post('/planf',(req, res) => {
-var plan = req.body;
-console.log(plan);
-//console.log(login);
-planfun.agregar(plan,(err, data) => {
-
-res.json(data);
-});
+app.post('/contratos',(req,res)=>{
+  let afiliado = req.body;
+  console.log(afiliado);
+  cont.agregarContrato(afiliado,(err,resp)=>{
+    res.json(resp);
+  });
 });
 
 app.post('/benef',(req,res)=>{

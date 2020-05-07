@@ -19,7 +19,7 @@ pfunmodel.agregar = (plan,callback) => {
       if(err){throw err}
       else {
           console.log(rowpr);
-        // let sqlrl = 'INSERT INTO usuarios (id_usuarios, cedula, nombres, apellidos, correo, cargo, contraseña, telefono, provedores_nit, roles_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);'
+        // let sqlrl = 'INSERT INTO reglas (grado_con, max_personas, max_edad, id_plan) VALUES ( ?, ?, ?, ?);'
         // connection.query(sqlus,[usu.usuario,usu.cedula,usu.nombres,usu.apellidos,usu.correo,usu.cargo,usu.contraseña,usu.telefono,provedor.nit,1],(err,rowus)=>{
         //   if(err){throw err}
         //   else

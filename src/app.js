@@ -128,6 +128,7 @@ app.all('*', function(req, res,next) {
 require('./routes/jwtRoutes')(app);
 require('./routes/planesRoutes')(app);
 require('./routes/provedoresRoutes')(app);
+require('./routes/contratosRoutes')(app);
 // require('./routes/planesRoutes')(app);
 // require('./routes/comentRoutes')(app);
 // require('./routes/medicoRoutes')(app);

@@ -1,9 +1,7 @@
 let mysql =require('mysql');
 let config = require('../config');
 let jwts = require('jsonwebtoken');
-let vals = require('./valida');
-let user = require('./user');
-let ciclo = require('../controler/ciclos')
+
 
 
 connection = mysql.createConnection({
