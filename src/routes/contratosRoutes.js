@@ -7,7 +7,7 @@ const cont = require('../models/contratos');
 
 module.exports = function (app) {
 
-app.post('/contratos',(req,res)=>{
+app.post('/contrato',(req,res)=>{
   let afiliado = req.body;
   console.log(afiliado);
   cont.agregarContrato(afiliado,(err,resp)=>{

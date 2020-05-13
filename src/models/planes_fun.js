@@ -32,5 +32,38 @@ pfunmodel.agregar = (plan,callback) => {
   }
 };
 
+pfunmodel.darplan = (id,callback) => {
+  if(connection)
+  {
+    let sql = 'SELECT * FROM plan_fun WHERE provedores_nit = ?;';
+    connection.query(sql,[id],(err,row)=>{
+      if(err){
+        console.log(err.sqlMessage);
+        callback(505,{err:err.sqlMessage})
+      }
+      else
+      {
+        callback(200,row);
+      }
+    });
+  }
+};
+
+pfunmodel.deletePlan = (id,callback) => {
+  if(connection)
+  {
+    let sql = 'DELETE FROM plan_fun WHERE id_plan= ?;';
+    connection.query(sql,[id],(err,row)=>{
+      if(err){
+        console.log(err.sqlMessage);
+        callback(505,{err:err.sqlMessage})
+      }
+      else
+      {
+        callback(200,{msj:true,delete:row.affectedRows});
+      }
+    });
+  }
+};
 
 module.exports = pfunmodel;

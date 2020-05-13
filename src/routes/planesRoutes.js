@@ -18,6 +18,21 @@ res.json(data);
 });
 });
 
+app.get('/planf/:id',(req,resp)=>{
+  let id = req.params.id;
+  console.log(req.params);
+  planfun.darplan(id,(err,res)=>{
+    resp.json(res);
+  });
+});
+
+app.delete('/planf/:id_plan',(req,resp)=>{
+  let id = req.params.id_plan;
+  planfun.deletePlan(id,(err,res)=>{
+    resp.json(res);
+  });
+});
+
 app.post('/benef',(req,res)=>{
   let ben = req.body;
   console.log(ben);
