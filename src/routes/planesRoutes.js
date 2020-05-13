@@ -1,5 +1,6 @@
 const planfun = require('../models/planes_fun');
 const cont = require('../models/contratos');
+const jwt = require('../models/jwts');
 
 // const users = require('../models/user');
 // const provers = require('../models/provedores');
@@ -18,7 +19,7 @@ res.json(data);
 });
 });
 
-app.get('/planf/:id',(req,resp)=>{
+app.get('/planf/:id',jwt.valida,(req,resp)=>{
   let id = req.params.id;
   console.log(req.params);
   planfun.darplan(id,(err,res)=>{
