@@ -13,7 +13,7 @@ database: config.nombredb
 
 let contmodel = {};
 
-contmodel.agregarContrato = (afili,callback)=>
+contmodel.agregarContrato = (afili,callback) =>
 {
   if(connection)
   {
@@ -41,11 +41,6 @@ contmodel.agregarContrato = (afili,callback)=>
           });
         }
      });
-    // prmesa.then(async(res1, rej1)=>{
-    //   new Promise(function(resolve,reject)=>{
-    //
-    //   })
-    // })
   }
 };
 
