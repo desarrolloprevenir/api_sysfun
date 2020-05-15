@@ -85,7 +85,138 @@ else
 {
 return res.status(403).send({'mensaje':'error al validar ususario'});
 }
-
 };
+
+//valida si el usuario esta logeado o no
+jwtmodel.validaContratos = (req, res,next) =>
+{
+  console.log('Validando contratos');
+var token = req.body.token || req.query.token || req.headers['x-access-token'];
+let accion = req.route.stack[0].method;
+console.log(accion);
+if(token)
+{
+jwt.verify(token,config.jwt_secreto,(err, decoded)=>{
+if(err)
+{
+console.log(err);
+return res.status(403).send({'mensaje':'error al validar usuario, inicie sesion de nuevo'});
+}
+else
+{
+req.decoded = decoded;
+console.log(decoded);
+let contrato = decoded.permisos[2];
+console.log(contrato);
+if(accion=='post'){
+  console.log('es post');
+  console.log(contrato.insertar);
+  if(contrato.insertar==1)
+  {console.log('si puede realizar contratos');
+    next();}
+  else{return res.status(403).send({'mensaje':'el usuario no puede crear nuevos contratos'});}
+}
+else if(accion=='get'){
+  console.log('es get');
+  console.log(contrato.consultar);
+  if(contrato.consultar==1)
+  {console.log('si puede ver los contratos');
+    next();}
+  else{return res.status(403).send({'mensaje':'el usuario no puede ver los contratos'});}
+}
+else if(accion=='put'){
+  console.log('es put');
+  console.log(contrato.modificar);
+  if(contrato.modificar==1)
+  {console.log('si puede actualizar contratos');
+    next();}
+  else{return res.status(403).send({'mensaje':'el usuario no puede modificar contratos'});}
+}
+else if(accion=='delete'){
+  console.log('es delete');
+  console.log(contrato.eliminar);
+  if(contrato.eliminar==1)
+  {console.log('si puede eliminar contratos');
+    next();}
+  else{return res.status(403).send({'mensaje':'el usuario no puede eliminar contratos'});}
+}
+else{return res.status(403).send({'mensaje':'error en el metodo de de envio de la informacion consulta con el servicio all cliente'});}
+}
+});
+}
+else
+{
+return res.status(403).send({'mensaje':'error al validar ususario'});
+}
+};
+
+
+jwtmodel.validaPlanes = (req, res,next) =>
+{
+  console.log('Validando palens');
+var token = req.body.token || req.query.token || req.headers['x-access-token'];
+let accion = req.route.stack[0].method;
+console.log(accion);
+if(token)
+{
+jwt.verify(token,config.jwt_secreto,(err, decoded)=>{
+if(err)
+{
+console.log(err);
+return res.status(403).send({'mensaje':'error al validar usuario, inicie sesion de nuevo'});
+}
+else
+{
+req.decoded = decoded;
+// console.log(decoded);
+let plan = decoded.permisos[1];
+console.log(plan);
+if(accion=='post'){
+  console.log('es post');
+  console.log(plan.insertar);
+  if(plan.insertar==1)
+  {console.log('si puede realizar contratos');
+    next();}
+  else{return res.status(403).send({'mensaje':'el usuario no puede crear nuevos contratos'});}
+}
+else if(accion=='get'){
+  console.log('es get');
+  console.log(plan.consultar);
+  if(plan.consultar==1)
+  {console.log('si puede ver los contratos');
+    next();}
+  else{return res.status(403).send({'mensaje':'el usuario no puede ver los contratos'});}
+}
+else if(accion=='put'){
+  console.log('es put');
+  console.log(plan.modificar);
+  if(plan.modificar==1)
+  {console.log('si puede actualizar contratos');
+    next();}
+  else{return res.status(403).send({'mensaje':'el usuario no puede modificar contratos'});}
+}
+else if(accion=='delete'){
+  console.log('es delete');
+  console.log(plan.eliminar);
+  if(plan.eliminar==1)
+  {console.log('si puede eliminar contratos');
+    next();}
+  else{return res.status(403).send({'mensaje':'el usuario no puede eliminar contratos'});}
+}
+else{return res.status(403).send({'mensaje':'error en el metodo de de envio de la informacion consulta con el servicio all cliente'});}
+}
+});
+}
+else
+{
+return res.status(403).send({'mensaje':'error al validar ususario'});
+}
+};
+
+
+
+
+
+
 
 module.exports = jwtmodel;

@@ -113,6 +113,26 @@ validamodel.validaMedico = (vali,callback) =>{
   }
 };
 
+validamodel.validaCedulaAfiliado =  (req, res,next) =>
+{
+  if(connection){
+  console.log(req.body);
+  let sqlced = 'SELECT * FROM afiliado WHERE cedula = ?;';
+  connection.query(sqlced,[req.body.cedula],(err,row)=>{
+    if(err){return res.status(403).send(err);}
+    else {
+      console.log(row);
+      if (JSON.stringify(row)!='[]')
+      {
+        return res.status(205).send({'mensaje':'error al validar usuario, la cedula ya existe como afiliado en el sistema'});
+      }
+      next();
+    }
+  });
+  }
+
+};
+
 
 
 
