@@ -17,7 +17,7 @@ jwtmodel.login1 = (login,callback)=> {
   if(connection)
   {
     console.log(login);
-    let sql = 'SELECT usuarios.id_usuarios, roles.* FROM usuarios, roles WHERE usuarios.id_usuarios = ? AND usuarios.contraseña = ? AND roles.id_roles = usuarios.roles_id;';
+    let sql = 'SELECT usuarios.*, roles.* FROM usuarios, roles WHERE usuarios.id_usuarios = ? AND usuarios.contraseña = ? AND roles.id_roles = usuarios.roles_id;';
     connection.query(sql,[login.usuario,login.contraseña],(err,row)=>{
       if(err){throw err}
       else {
@@ -41,7 +41,7 @@ jwtmodel.login1 = (login,callback)=> {
                   console.log(usu.id_roles);
                   console.log(usu.id_usuarios);
                   // console.log({usuario:usu.id_usaurios,rol:usu.id_roles,permisos:usu.permisos});
-                  let member = {usu:usu.id_usuarios,rol:usu.id_roles,permisos:usu.permisos};
+                  let member = {resp};
                   console.log(member);
                   var tokenres = jwt.sign(member,config.jwt_secreto);
                   console.log(tokenres);
